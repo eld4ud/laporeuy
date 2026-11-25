@@ -1,0 +1,58 @@
+LAPORWUD - OVERLAY SOURCE CODE
+==============================
+
+PENTING:
+- ZIP ini adalah overlay untuk project Laravel yang sudah kamu buat dengan nama folder lapor-rusak.
+- Ekstrak ISI ZIP ke dalam folder lapor-rusak, bukan membuat folder project baru.
+- File yang memiliki nama sama akan ditimpa. Backup dulu jika sudah mengubah file tersebut.
+
+CARA EKSTRAK VIA TERMINAL WINDOWS (PowerShell):
+1. Tutup server Laravel jika sedang berjalan (Ctrl + C).
+2. Pindahkan ZIP ke folder yang mudah ditemukan, misalnya Downloads.
+3. Buka terminal di folder project:
+   cd path\ke\lapor-rusak
+4. Ekstrak ZIP (sesuaikan lokasi ZIP):
+   Expand-Archive -Path "$HOME\Downloads\lapor-rusak-overlay.zip" -DestinationPath . -Force
+
+Jika ZIP berada di folder project:
+   Expand-Archive -Path ".\lapor-rusak-overlay.zip" -DestinationPath . -Force
+
+SETELAH EKSTRAK:
+1. Pastikan file .env sudah ada. Jangan menimpa .env dengan file dari ZIP.
+2. Atur database MySQL di .env:
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=laporwud
+   DB_USERNAME=root
+   DB_PASSWORD=
+   Gunakan database laporwud yang sudah kamu buat lewat phpMyAdmin.
+3. Jalankan:
+   php artisan key:generate
+   php artisan migrate --seed
+   php artisan storage:link
+   php artisan serve
+4. Buka http://127.0.0.1:8000
+
+AKUN DEMO (dibuat oleh --seed):
+Admin     : admin@laporwud.test / password123
+Teknisi   : teknisi@laporwud.test / password123
+Siswa     : siswa@laporwud.test / password123
+
+LOGIN:
+- Siswa/guru : /login
+- Admin      : /admin/login
+- Teknisi    : /teknisi/login
+
+ROLE & ALUR:
+- Siswa dan guru mengirim serta memantau laporan milik sendiri.
+- Admin memverifikasi laporan, memilih teknisi, dan memeriksa bukti perbaikan.
+- Teknisi hanya melihat tugas yang ditugaskan kepadanya, memperbarui progres, dan mengunggah bukti.
+- Status akhir "selesai" hanya ditetapkan admin setelah bukti diperiksa.
+
+CATATAN:
+- Tampilan memakai Tailwind CDN dan Google Fonts sehingga butuh internet saat halaman dibuka.
+- Validasi foto laporan dan bukti maksimal 2 MB.
+- ZIP ini tidak menyertakan folder vendor, node_modules, .env, atau file inti project Laravel.
+- Bila project kamu memakai migration users bawaan Laravel, migration tambahan di ZIP akan menambahkan kolom role dan class_name.
+- Pastikan nama folder project di terminal benar-benar lapor-rusak.
